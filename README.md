@@ -19,5 +19,5 @@ Two pointers to get you started:
 
 
 ## License
-- [License](https://github.com/Optical-Networks-Group/rsa-rl/blob/main/LICENSE.pdf)
+- [License](https://github.com/Optical-Networks-Group/rsa-rl/blob/master/LICENSE.pdf)
 
