@@ -118,7 +118,7 @@ def summary(experiences):
 def batch_summary(experiences):
     """
     """
-    n_blockings = []
+    blocking_probs = []
     avg_utils = []
     total_rewards = []
     # calc performance
