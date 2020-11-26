@@ -1,0 +1,226 @@
+
+
+
+.slider {
+  padding: 10px 25px 0px;
+}
+
+input {
+  color: #ffffff;
+}
+
+.table-content {
+  background-color: white;
+  display: block;
+  height: 363px;
+  overflow-y: scroll;
+}
+
+.table-row {
+  font-family: 'Open Sans', sans-serif;
+  width: 50%;
+  color: #333333;
+  font-size: 2.0rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #4b5460;
+}
+
+
+.metric-row {
+  font-size: 2.0rem;
+  /* font-size: 1.3rem; */
+  word-wrap:break-all;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center; /* vertical center row items*/
+}
+
+.metric-row:hover {
+  background-color: #1f2c56;
+  color: #ffffff;
+}
+
+.section-banner {
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  font-weight: 800;
+  
+  color: #333333;
+  font-size: 2.5rem;
+  text-align: left;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #4b5460;
+}
+
+.table-banner {
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  
+  color: #333333;
+  font-size: 2.0rem;
+  text-align: left;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #4b5460;
+}
+
+
+.js-plotly-plot .plotly .modebar {
+  padding-top: 5%;
+  margin-right: 3.5%;
+}
+
+body {
+  background-color: #f2f2f2;
+}
+.two.columns {
+  width: 16.25%;
+}
+
+.column,
+.columns {
+  margin-left: 0.5%;
+}
+
+div._dash-undo-redo {
+  display: none;
+}
+.pretty_container {
+  background-color: #f9f9f9;
+  margin: 10px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.12), 0px 1px 2px rgba(0,0,0,0.24);
+  border-width: 0px 0px 0px 0px;
+  border-style: solid;
+  border-color: #e2e2e2;
+  border-radius: 0px;
+  outline-width: 0px;
+  outline-style: solid;
+  outline-color: #e2e2e2;
+}
+.figure_container {
+  background-color: #f9f9f9;
+  margin: 10px, 0px, 0px, 0px;
+  padding: 15px, 0px, 0px, 0px;
+  position: relative;
+}
+
+.bare_container {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+.dcc_control {
+  margin: 0;
+  padding: 5px;
+  width: calc(100%-40px);
+}
+
+.control_label {
+  margin: 0;
+  padding: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  width: calc(100%-40px);
+}
+
+.rc-slider {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+.flex-display {
+  display: flex;
+}
+
+.container-display {
+  display: flex;
+}
+
+#individual_graph,
+#aggregate_graph {
+  width: calc(100% - 30px);
+  position: absolute;
+}
+
+#count_graph {
+  position: absolute;
+  height: calc(100% - 30px);
+  width: calc(100% - 30px);
+}
+
+#countGraphContainer {
+  flex: 5;
+  position: relative;
+}
+
+#header {
+  align-items: center;
+}
+
+#learn-more-button {
+  text-align: center;
+  height: 100%;
+  padding: 0 20px;
+  text-transform: none;
+  font-size: 15px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 30px;
+}
+#title {
+  text-align: center;
+}
+
+.mini_container {
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin: 10px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+#right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+#wells {
+  flex: 1;
+}
+
+#gas {
+  flex: 1;
+}
+
+#aggregate_data {
+  align-items: center;
+}
+
+#oil {
+  flex: 1;
+}
+
+#water {
+  flex: 1;
+}
+
+#tripleContainer {
+  display: flex;
+  flex: 3;
+}
+
+#mainContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#pie_graph > div > div > svg:nth-child(3) > g.infolayer > g.legend {
+  pointer-events: all;
+  transform: translate(30px, 349px);
+}
+
