@@ -8,7 +8,7 @@ _RSA-RL_ is an open source reinforcement learning framework for routing and spec
 ## Installation
 To install rsa-rl, use `pip`.
 ```
-$ pip install -e git+ssh://git@github.com/Optical-Networks-Group/rsa-rl@master#egg=rsa-rl
+$ pip install git+https://github.com/Optical-Networks-Group/rsa-rl.git
 ```
 
 
