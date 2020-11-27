@@ -1,13 +1,9 @@
 
 bitarray>=1.2.1
-gym>=0.17.2
 networkx>=2.5
-scipy>=1.4.1
 tensorboard>=2.2.2
 tensorboardX>=2.1
 torch>=1.5.1
-torchvision>=0.6.1
-recordclass>=0.14.0
 plotly>=4.9.0
 dash>=1.14.0
 dash-bootstrap-components>=0.10.7
