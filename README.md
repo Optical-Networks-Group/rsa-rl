@@ -14,7 +14,7 @@ $ pip install git+https://github.com/Optical-Networks-Group/rsa-rl.git
 
 ## Getting Started
 Two pointers to get you started: 
-- [Tutorials](https://github.com/Optical-Networks-Group/rsa-rl-examples): explain how to evaluate your algorithm and compare it with heuristic algorithm
+- [Tutorials](https://github.com/Optical-Networks-Group/rsa-rl-tutorials): explain how to evaluate your algorithm and compare it with heuristic algorithm
 - The API Reference (To appear)
 
 
