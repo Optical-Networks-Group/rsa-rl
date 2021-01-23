@@ -3,6 +3,7 @@ import importlib
 
 TopologyDict = {
     "arpa": "rsarl.networks.topology:ARPA",
+    "conus": "rsarl.networks.topology:CONUS",
     "clara": "rsarl.networks.topology:CLARA",
     "cost266": "rsarl.networks.topology:COST266",
     "german": "rsarl.networks.topology:GERMAN",
