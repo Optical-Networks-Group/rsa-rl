@@ -3,11 +3,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+from rsarl.models.initializer import normalized_columns_initializer
 
-def normalized_columns_initializer(weights, std=1.0):
-    out = torch.randn(weights.size())
-    out *= std / torch.sqrt(out.pow(2).sum(1,keepdim=True).expand_as(out))
-    return out
 
 class ACNet(nn.Module):
     """Deep Neural Network used in DeepRMSAv2
