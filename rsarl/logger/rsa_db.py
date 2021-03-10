@@ -245,3 +245,13 @@ class RSADB(SqliteDB):
         G = adjacency_graph(json.loads(db_row[7]))
         return act, req, G
 
+    def get_n_request_to_evaluate(self, target_exp_name: str):
+        sql = f"""
+            select COUNT(*) 
+            from experiences
+            where experiment_name == "{target_exp_name}"
+            """
+        
+        num = self.select(sql)[0][0]
+        return num
+

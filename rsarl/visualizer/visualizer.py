@@ -5,7 +5,7 @@ from rsarl.visualizer import build_dash
 
 def run_cli():
     db_path = sys.argv[1]
-    db = RSADB(db_path)
+    db = RSADB(db_name=db_path)
     # build & run dash
     app = build_dash(db)
     # Turn off reloader if inside Jupyter

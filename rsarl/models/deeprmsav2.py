@@ -2,12 +2,12 @@
 import numpy as np
 import torch
 import torch.nn as nn
-
+from pfrl.policies import SoftmaxCategoricalHead
 from rsarl.models.initializer import normalized_columns_initializer
 
 
-class ACNet(nn.Module):
-    """Deep Neural Network used in DeepRMSAv2
+class DeepRMSAv2Net(nn.Module):
+    """Deep Neural Network used in DeepRMSAv2(called ACNet)
 
      paper: DeepRMSA: A Deep Reinforcement Learning Framework for Routing, 
             Modulation and Spectrum Assignment in Elastic Optical Networks
@@ -26,6 +26,8 @@ class ACNet(nn.Module):
         # last layers
         self.policy = nn.Linear(out_size, self.n_action, bias=False)
         self.value = nn.Linear(out_size, 1, bias=False)
+        # softmax
+        self.softmax = SoftmaxCategoricalHead()
         # initialize last layers
         self.policy.weight.data = normalized_columns_initializer(
             self.policy.weight.data, 0.01)
@@ -48,10 +50,10 @@ class ACNet(nn.Module):
         return int(np.prod(o.size()))
     
     def forward(self, x):
-        hp = self.body_p(x)
-        p = self.policy(hp)
+        p = self.body_p(x)
+        p = self.policy(p)
+        p = self.softmax(p)
 
-        hv = self.body_v(x)
-        v = self.value(hv)
+        v = self.body_v(x)
+        v = self.value(v)
         return p, v
-

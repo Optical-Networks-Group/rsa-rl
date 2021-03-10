@@ -16,20 +16,29 @@ from rsarl.visualizer import gen_network_topology, gen_slot_table, gen_blocking_
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 db = None
 
+def _id_encode(s: str):
+    return s.replace(".", "dot")
+
+def _id_decode(s: str):
+    return s.replace("dot", ".")
+
+
 def set_callback(exp_name):
+    encoded_exp_name = _id_encode(exp_name)
+
     @app.callback(
         [
-            Output(f"{exp_name}:network-figure", 'figure'),
-            Output(f"{exp_name}:slot-table", 'figure'),
-            Output(f"{exp_name}:request-slider-label", 'children'),
+            Output(f"{encoded_exp_name}:network-figure", 'figure'),
+            Output(f"{encoded_exp_name}:slot-table", 'figure'),
+            Output(f"{encoded_exp_name}:request-slider-label", 'children'),
         ],
         [
-            Input(f"{exp_name}:request-slider", 'value'),
+            Input(f"{encoded_exp_name}:request-slider", 'value'),
         ],
         [
-            State(f"{exp_name}:network-figure", 'figure'),
-            State(f"{exp_name}:slot-table", 'figure'),
-            State(f"{exp_name}:request-slider-label", 'children'),
+            State(f"{encoded_exp_name}:network-figure", 'figure'),
+            State(f"{encoded_exp_name}:slot-table", 'figure'),
+            State(f"{encoded_exp_name}:request-slider-label", 'children'),
         ]
     )
     def update_act_history_figures(req_id, net_fig, slot_fig, slider_label):
@@ -40,8 +49,8 @@ def set_callback(exp_name):
 
         slider_val_text = ctx.triggered[0]['prop_id'].split('.')[0]
         # getch experiment name
-        exp_name = slider_val_text.split(":")[0]
-
+        encoded_exp_name = slider_val_text.split(":")[0]
+        exp_name = _id_decode(encoded_exp_name)
         act, req, G = db.get_act_history(exp_name, req_id)
 
         # build figure
@@ -177,10 +186,11 @@ def build_header(db):
     )
 
 def build_slider(exp_name: str, label: str, req_id: int=0):
-    slider_id = f"{exp_name}:request-slider"
-    slider_label_id = f"{exp_name}:request-slider-label"
+    encoded_exp_name = _id_encode(exp_name)
+    slider_id = f"{encoded_exp_name}:request-slider"
+    slider_label_id = f"{encoded_exp_name}:request-slider-label"
     range_min = 0
-    range_max = 10000
+    range_max = db.get_n_request_to_evaluate(exp_name)
     return html.Div(
             className="twelve columns slider",
             children=[
@@ -303,9 +313,11 @@ def build_experiment(exp_name: str, req_id: int=0):
     slot_figure = gen_slot_table(G, act)
     # build label
     request_slider_label = f"[{req_id}-th Request] source: {req.source} -> destination: {req.destination}, bandwidth: {req.bandwidth}"
+    # remove .
+    encoded_exp_name = _id_encode(exp_name)
 
     return html.Div(
-            id=f"{exp_name}:section",
+            id=f"{encoded_exp_name}:section",
             className="pretty_container twelve columns",
             children=[
                 # agent name
@@ -319,7 +331,7 @@ def build_experiment(exp_name: str, req_id: int=0):
                             children=dcc.Loading(
                                 children=dcc.Graph(
                                     figure=net_figure,
-                                    id=f"{exp_name}:network-figure",
+                                    id=f"{encoded_exp_name}:network-figure",
                                 ),
                             ),
                         ),
@@ -329,7 +341,7 @@ def build_experiment(exp_name: str, req_id: int=0):
                             children=dcc.Loading(
                                 children=dcc.Graph(
                                     figure=slot_figure,
-                                    id=f"{exp_name}:slot-table", 
+                                    id=f"{encoded_exp_name}:slot-table", 
                                 ),
                             ),
                         ),

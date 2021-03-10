@@ -1,6 +1,4 @@
 
-
-
 import numpy as np
 from rsarl.data import Action
 from rsarl.agents import KSPAgent
@@ -11,7 +9,9 @@ from rsarl.utils.fragmentation import edge_based_entropy
 class EntropyAgent(KSPAgent):
     """Entropy-based RSA Agent with K-Shortest Path
 
-        Paper: https://ieeexplore.ieee.org/document/6647621
+        Paper: Simulation results of Shannon entropy based 
+            flexgrid routing and spectrum assignment on a real network topology
+            (https://ieeexplore.ieee.org/document/6647621)
 
         Args:
             k (int): The number of paths to be considered.
@@ -36,8 +36,7 @@ class EntropyAgent(KSPAgent):
 
         # Search KSP-FF
         candidates = []
-        for _k in range(self.k):
-            path = paths[_k]
+        for i, path in enumerate(paths):
             path_len = net.distance(path)  # physical length of the path
             n_req_slot = cal_slot(bandwidth, path_len)
             # calc entropy
@@ -45,11 +44,11 @@ class EntropyAgent(KSPAgent):
             min_ent = np.min(ent)
             slot_index = np.argmin(ent)
             # candidate (k-path, slot-idx, n_req_slot, entropy)
-            candidates.append((_k, int(slot_index), n_req_slot, min_ent))
+            candidates.append((i, int(slot_index), n_req_slot, min_ent))
 
         # search the minimum entropy among k-sp
-        _k, start_idx, n_req_slot, _ = min(candidates, key=lambda item:item[3])
-        path = paths[_k]
+        i_th, start_idx, n_req_slot, _ = min(candidates, key=lambda item:item[3])
+        path = paths[i_th]
 
         act = Action(path, start_idx, n_req_slot, duration)
         return act

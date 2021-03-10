@@ -97,15 +97,14 @@ class KSPDRLAgent(KSPAgent):
         raise NotImplementedError
 
     def observe(self, obs, reward, done, reset):
-        self.drl.observe(self.preprocess(obs), reward, done, reset)
+        self.batch_observe([obs], [reward], [done], [reset])
     
     def batch_observe(self, batch_obs, batch_reward, batch_done, batch_reset):
         obs = [self.preprocess(o) for o in batch_obs]
         self.drl.batch_observe(obs, batch_reward, batch_done, batch_reset)
 
     def act(self, obs):
-        act = self.drl.act(self.preprocess(obs))
-        return self.map_drlout_to_action(obs, act)
+        return self.batch_act([obs])[0]
 
     def batch_act(self, batch_obs):
         obs = [self.preprocess(o) for o in batch_obs]

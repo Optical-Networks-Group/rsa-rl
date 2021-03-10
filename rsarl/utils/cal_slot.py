@@ -3,8 +3,6 @@ import math
 
 def cal_slot(bandwidth: int, path_len: int, guard: int=0) -> int:
     """Calculate the number of required slots. 
-    Slot range is  1 <= req_n_slot <= 8. 
-    bandwidth is 25 <= bandwidth <= 100. 
 
     Args:
         bandwidth (int): required bandwidth

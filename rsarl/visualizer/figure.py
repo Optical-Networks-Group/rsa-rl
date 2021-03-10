@@ -190,9 +190,19 @@ def gen_blocking_prob_line_graph(bp_list: list):
     for i in range(len(bp_list)):
         exp_name, _, y_mean, y_std = bp_list[i]
         if exp_name != base_exp_name:
-            y_std  = np.ones_like(shared_x) * y_std
-            y_mean = np.ones_like(shared_x) * y_mean
-            bp_list[i] = exp_name, shared_x, y_mean, y_std
+            if len(y_std) == 1: # heuristic methods
+                y_std  = np.ones_like(shared_x) * y_std
+                y_mean = np.ones_like(shared_x) * y_mean
+                bp_list[i] = exp_name, shared_x, y_mean, y_std
+            
+            else: # RL methods
+                _y_std  = np.ones_like(shared_x) * y_std[-1]
+                _y_std[:len(y_std)] = y_std
+
+                _y_mean = np.ones_like(shared_x) * y_mean[-1]
+                _y_mean[:len(y_mean)] = y_mean
+
+                bp_list[i] = exp_name, shared_x, _y_mean, _y_std
     
     # build figures
     for i, (exp_name, _, y_mean, y_std) in enumerate(bp_list):
