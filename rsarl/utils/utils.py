@@ -128,7 +128,11 @@ def copy_and_assign_slot(slot: bitarray, start_idx: int, n_req_slot: int) -> bit
 
     """
     temp_path_slot = copy.deepcopy(slot)
-    temp_path_slot[start_idx: start_idx + n_req_slot] = 0
+    if 0 in temp_path_slot[start_idx: start_idx + n_req_slot]:
+        raise ValueError(f"Target slot is already occupied. slot[{start_idx}: {start_idx + n_req_slot}]")
+    else:
+        temp_path_slot[start_idx: start_idx + n_req_slot] = 0
+        
     return temp_path_slot
 
 
