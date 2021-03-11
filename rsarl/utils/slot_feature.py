@@ -55,3 +55,4 @@ def k_consecutive_available_slot(slot: bitarray, k: int) -> tuple:
     
     return len(start_idx), start_idx, slot_continue
 
+

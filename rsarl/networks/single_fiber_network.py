@@ -117,7 +117,7 @@ class SingleFiberNetwork(Network):
 
 
     def adj_path_slot(self, path:list):
-        """Calculate AND for slot table of adjacent edges on the path.
+        """Get slot of adjacent edges on the path.
 
         Args:
             path (list): List of node-ids.
