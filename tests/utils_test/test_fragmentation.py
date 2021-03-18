@@ -3,6 +3,7 @@ import pytest
 import numpy as np
 from bitarray import bitarray
 from rsarl.utils.fragmentation.entropy import entropy, _path_based_entropy
+from rsarl.utils.fragmentation import is_cut, misalignment
 
 
 ent_test_data = [
@@ -32,5 +33,38 @@ def test_path_based_entropy(path_slot, n_req_slot, expect):
     assert np.allclose(vent, expect)
 
 
+is_cut_test_data = [
+    ([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 0, 1, False),
+    ([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 1, 1, True),
+    ([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 14, 1, True),
+    ([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 15, 1, False),
+    ([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 0, 3, False),
+    ([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 3, 3, True),
+    ([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 13, 3, False),
+]
+@pytest.mark.parametrize("path_slot, start_idx, req_n_slot, expect", is_cut_test_data)
+def test_is_cut(path_slot, start_idx, req_n_slot, expect):
+    path_slot = bitarray(path_slot)
+    assert is_cut(path_slot, start_idx, req_n_slot) == expect
 
+
+misallignment_test_data = [
+    # increase
+    ([1,1,1,1], [1,1,1,1], 0, 1, 1), 
+    ([1,1,1,1], [1,1,1,1], 0, 2, 2), 
+    ([1,1,1,1], [1,1,1,1], 0, 3, 3), 
+    ([1,1,1,1], [1,1,1,1], 0, 4, 4), 
+    # decrease
+    ([1,1,1,1], [0,0,0,0], 0, 1, -1), 
+    ([1,1,1,1], [0,0,0,0], 0, 2, -2), 
+    ([1,1,1,1], [0,0,0,0], 0, 3, -3), 
+    ([1,1,1,1], [0,0,0,0], 0, 4, -4), 
+    # 
+    ([1,1,1,1,1,0,0,0,1,1,1,0], [1,1,0,0,1,1,0,0,1,1,0,0], 2, 1, -1), 
+]
+@pytest.mark.parametrize("path_slot, neighbor_slot, start_idx, req_n_slot, expect", misallignment_test_data)
+def test_misallignment(path_slot, neighbor_slot, start_idx, req_n_slot, expect):
+    path_slot = bitarray(path_slot)
+    neighbor_slot = bitarray(neighbor_slot)
+    assert misalignment(path_slot, neighbor_slot, start_idx, req_n_slot) == expect
 

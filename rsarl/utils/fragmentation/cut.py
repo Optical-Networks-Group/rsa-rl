@@ -27,6 +27,8 @@ def is_cut(slot_vec: bitarray, start_idx: int, req_n_slot: int):
     boundary_idx = st_idx1 + st_idx2
     # check start-idx and end-idx is located at boundary
     end_idx = start_idx + req_n_slot - 1
+    # check
+    assert (0 <= start_idx) and (end_idx < n_slot)
     
     if start_idx in boundary_idx or end_idx in boundary_idx:
         return False # not-cut
