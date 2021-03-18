@@ -248,7 +248,7 @@ def gen_blocking_prob_line_graph(bp_list: list):
         height=400,
         hovermode='closest',
         margin=dict(b=20,l=10,r=5,t=10),
-        xaxis_title='Batch [epoch]',
+        xaxis_title='Evaluation Steps',
         yaxis_title='Blocking Probability [%]',
         legend_title_text='EXP. Name',
         legend=dict(

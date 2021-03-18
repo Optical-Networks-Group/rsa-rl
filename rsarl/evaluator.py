@@ -134,3 +134,68 @@ def batch_summary(experiences):
 
     return blocking_probs, avg_utils, total_rewards
 
+
+def train(vec_env, agent, train_steps):
+    obses = vec_env.last_obs
+    resets = [False for _ in range(len(obses))]
+
+    for _ in range(train_steps):
+        acts = agent.batch_act(obses)
+        obses, rews, dones, infos = vec_env.step(acts)
+        agent.batch_observe(obses, rews, dones, resets)
+        # Make mask(not_end). 0 if done/reset, 1 if pass
+        end = np.logical_or(resets, dones)
+        not_end = np.logical_not(end)
+        obses = vec_env.reset(not_end)
+
+
+def train_eval_loop(
+    vec_env, 
+    agent, 
+    evaluator,
+    n_loop: int, 
+    train_loop: int, 
+):
+    vec_env.reset()
+    for _ in range(n_loop):
+        train(vec_env, agent, train_loop)
+        evaluator(agent)
+
+
+class Evaluator():
+
+    def __init__(
+        self,
+        test_env,
+        warming_up_steps=3000,
+        evalutate_steps=10000,
+        logger=None,
+    ):
+        self.env = test_env
+        self.warming_up_steps = warming_up_steps
+        self.evalutate_steps = evalutate_steps
+        self.logger = logger
+
+
+    def evaluate(self, agent):
+        self.env.reset()
+        # eval
+        batch_warming_up(self.env, agent, n_requests=self.warming_up_steps)
+        experiences = batch_evaluation(self.env, agent, n_requests=self.evalutate_steps)
+        # calc metrics
+        blocking_probs, avg_utils, total_rewards = batch_summary(experiences)
+        # logger
+        if self.logger is not None:
+            self.logger(agent, experiences, blocking_probs, avg_utils, total_rewards)
+
+        return np.average(blocking_probs)
+
+
+    def __call__(self, agent):
+        if hasattr(agent, "drl"):
+            with agent.drl.eval_mode():
+                self.evaluate(agent)
+        else:
+            self.evaluate(agent)
+
+
